@@ -184,6 +184,9 @@ return [
         // Roles and Permissons LaraTrust
         Laratrust\LaratrustServiceProvider::class,
 
+        // jwt auth
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+
     ],
 
     /*
@@ -231,9 +234,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        
+
         // Laratrust Facades
-        'Laratrust'   => Laratrust\LaratrustFacade::class,
+        'Laratrust' => Laratrust\LaratrustFacade::class,
+
+        // jwt auth Facades
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
 
     ],
 
