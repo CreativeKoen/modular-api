@@ -13,27 +13,29 @@ use Illuminate\Http\Request;
 |
 */
 
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:api');
-
 $api = app('Dingo\Api\Routing\Router');
-$api->version('v1', function ($api) {
 
+$api->version('v1', function ($api) {
 
     $api->post('authenticate', 'App\Http\Controllers\AuthController@authenticate');
 
+});
+
+$api->version('v1', ['middleware' => 'api.auth'], function ($api) {
+    # get a refresh token
+    $api->post('refresh', 'App\Http\Controllers\AuthController@refreshToken');
+
+    $api->get('me', 'App\Http\Controllers\AuthController@getCurrentUser');
 
     # getting data
     $api->get('users', 'App\Http\Controllers\MainController@index');
-    $api->get('users/{userID}', 'App\Http\Controllers\MainController@getUserRole');
+    $api->get('users/{userID}', 'App\Http\Controllers\MainController@getUser');
     $api->get('users/{userID}/roles', 'App\Http\Controllers\MainController@getUserRole');
 
     $api->get('role/{roleID}/permissions', 'App\Http\Controllers\MainController@getPermissions');
 
     # setting data
-    $api->post('users/role/add', 'App\Http\Controllers\MainController@attachUserRole');
-    $api->post('role/permission/add', 'App\Http\Controllers\MainController@attachPermission');
+    $api->post('users/role/add', 'App\Http\Controllers\MainController@setUserRole');
+    $api->post('role/permission/add', 'App\Http\Controllers\MainController@setPermission');
 
 });
