@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-
 use App\Role;
 use App\Permission;
 
@@ -18,13 +17,19 @@ class MainController extends Controller
         return $this->response->array($user);
     }
 
-    public function getUserRole($userID)
+    public function getUser(int $userID)
+    {
+        $user = User::findOrFail($userID);
+        return $this->response->array($user);
+    }
+
+    public function getUserRole(int $userID)
     {
         $user = User::findOrFail($userID);
         return $this->response->array($user->roles);
     }
 
-    public function getPermissions(int $roleID)
+    public function getPermissions($roleID)
     {
         $role = Role::findOrFail($roleID);
 
@@ -32,7 +37,7 @@ class MainController extends Controller
     }
 
 
-    public function attachUserRole(Request $request)
+    public function setUserRole(Request $request)
     {
         $parameter = $request->only(['role', 'user']);
 
@@ -47,7 +52,7 @@ class MainController extends Controller
         return $this->response->created();
     }
 
-    public function attachPermission(Request $request)
+    public function setPermission(Request $request)
     {
         $parameter = $request->only(['permission', 'role']);
 
