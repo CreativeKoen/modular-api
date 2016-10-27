@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
-------------------------------------
+|--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
@@ -17,25 +17,33 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
 
-    $api->post('authenticate', 'App\Http\Controllers\AuthController@authenticate');
+    $api->post('authenticate', 'Api\Controllers\AuthController@authenticate');
 
 });
 
 $api->version('v1', ['middleware' => 'api.auth'], function ($api) {
-    # get a refresh token
-    $api->post('refresh', 'App\Http\Controllers\AuthController@refreshToken');
 
-    $api->get('me', 'App\Http\Controllers\AuthController@getCurrentUser');
+    //--------------------------------------------------------------------------
+    // ACL Routes
+    //--------------------------------------------------------------------------
+    $api->post('refresh', 'Api\Controllers\AuthController@refreshToken');
+
+    $api->get('me', 'Api\Controllers\AuthController@getCurrentUser');
 
     # getting data
-    $api->get('users', 'App\Http\Controllers\MainController@index');
-    $api->get('users/{userID}', 'App\Http\Controllers\MainController@getUser');
-    $api->get('users/{userID}/roles', 'App\Http\Controllers\MainController@getUserRole');
+    $api->get('users', 'Api\Controllers\MainController@index');
+    $api->get('users/{userID}', 'Api\Controllers\MainController@getUser');
+    $api->get('users/{userID}/roles', 'Api\Controllers\MainController@getUserRole');
 
-    $api->get('role/{roleID}/permissions', 'App\Http\Controllers\MainController@getPermissions');
+    $api->get('role/{roleID}/permissions', 'Api\Controllers\MainController@getPermissions');
 
     # setting data
-    $api->post('users/role/add', 'App\Http\Controllers\MainController@setUserRole');
-    $api->post('role/permission/add', 'App\Http\Controllers\MainController@setPermission');
+    $api->post('users/role/add', 'Api\Controllers\MainController@setUserRole');
+    $api->post('role/permission/add', 'Api\Controllers\MainController@setPermission');
 
+
+    //--------------------------------------------------------------------------
+    // Data Routes
+    //--------------------------------------------------------------------------
+    $api->resource('posts', 'Api\Controllers\PostController');
 });

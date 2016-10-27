@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Api\Controllers;
 
 use Validator;
 use App\Http\Requests;
@@ -9,7 +9,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class AuthController extends Controller
+class AuthController extends ApiBaseController
 {
     /**
      * Create a new controller instance.

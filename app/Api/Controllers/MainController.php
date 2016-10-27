@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Api\Controllers;
 
 use App\User;
 use App\Role;
@@ -9,7 +9,7 @@ use App\Permission;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class MainController extends Controller
+class MainController extends ApiBaseController
 {
     public function index()
     {
