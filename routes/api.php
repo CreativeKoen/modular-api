@@ -15,13 +15,14 @@ use Illuminate\Http\Request;
 
 $api = app('Dingo\Api\Routing\Router');
 
+// $api->version('v1', ['middleware' => 'cors'], function ($api) {
 $api->version('v1', function ($api) {
 
     $api->post('authenticate', 'Api\Controllers\AuthController@authenticate');
 
 });
 
-$api->version('v1', ['middleware' => 'api.auth'], function ($api) {
+$api->version('v1', ['middleware' => ['api.auth']], function ($api) {
 
     //--------------------------------------------------------------------------
     // ACL Routes
@@ -45,5 +46,5 @@ $api->version('v1', ['middleware' => 'api.auth'], function ($api) {
     //--------------------------------------------------------------------------
     // Data Routes
     //--------------------------------------------------------------------------
-    $api->resource('posts', 'Api\Controllers\PostController');
+    $api->resource('post', 'Api\Controllers\PostController');
 });
