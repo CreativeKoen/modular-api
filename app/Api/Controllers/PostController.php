@@ -3,6 +3,7 @@
 namespace Api\Controllers;
 
 use App\Post;
+use Api\Requests\PostRequest;
 use Api\Transformers\PostTransformer;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class PostController extends ApiBaseController
      */
     public function create()
     {
+        // this will react/angular do for us
     }
 
     /**
@@ -35,9 +37,15 @@ class PostController extends ApiBaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->get('title');
+        $post->body = $request->get('body');
+        $post->user_id = (int) $request->get('user_id');
+        $post->save();
+
+        return $this->response->created();
     }
 
     /**
@@ -60,7 +68,7 @@ class PostController extends ApiBaseController
      */
     public function edit($id)
     {
-        //
+        // this will react/angular do for us
     }
 
     /**
@@ -70,9 +78,12 @@ class PostController extends ApiBaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update($request->only(['title', 'body', 'user_id']));
+
+        return $this->response->accepted();
     }
 
     /**
@@ -83,6 +94,6 @@ class PostController extends ApiBaseController
      */
     public function destroy($id)
     {
-        //
+        return Post::destroy($id);
     }
 }

@@ -23,7 +23,8 @@ class AuthController extends ApiBaseController
 
     public function authenticate(Request $request)
     {
-        $credentails = $request->only('email', 'password');
+        # $credentails = (array) $request['params'];
+        $credentails = $request->only(['email', 'password']);
         $token = JWTAuth::attempt($credentails);
 
         try {
