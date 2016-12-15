@@ -31,7 +31,7 @@ class RolesTableSeeder extends Seeder
         $user->save();
 
         $web = new Role();
-        $web->name = "Web";
+        $web->name = "WebClient";
         $web->display_name = "Web user";
         $web->description = "An Role as Web User is used for the React Frondend, Note this is virtual user";
         $web->save();
